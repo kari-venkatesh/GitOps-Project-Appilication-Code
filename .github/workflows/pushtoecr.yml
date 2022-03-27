@@ -58,6 +58,15 @@ jobs:
         # push it to ECR so that it can
         # be deployed to ECS.
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
+    - name: Commit the image to the gitops repo
+      run: | 
+              curl --location --request POST 'https://api.github.com/repos/shivamangina/node-gitOps/dispatches' \
+              --header 'A: application/vnd.github.v3+json' \
+              --header 'Authorization: Bearer ${{ secrets.TOKEN_ARGO }}' \
+              --header 'Content-Type: application/json' \
+              --data-raw '{"event_type":"update-image" , "client_payload":{ 
+                  "image":"node_app:${{ github.sha }}"
+                }}' 
