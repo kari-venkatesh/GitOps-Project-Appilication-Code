@@ -51,7 +51,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: node_app
+        ECR_REPOSITORY: sample-node-app
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and
@@ -61,12 +61,12 @@ jobs:
         docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}"
 
-    - name: Commit the image to the gitops repo
-      run: | 
-              curl --location --request POST 'https://api.github.com/repos/shivamangina/node-git-ops/dispatches' \
-              --header 'A: application/vnd.github.v3+json' \
-              --header 'Authorization: Bearer ${{ secrets.TOKEN_ARGO }}' \
-              --header 'Content-Type: application/json' \
-              --data-raw '{"event_type":"update-image" , "client_payload":{ 
-                  "image":"node_app:${{ github.sha }}"
-                }}' 
+    # - name: Commit the image to the gitops repo
+    #   run: | 
+    #           curl --location --request POST 'https://api.github.com/repos/shivamangina/node-git-ops/dispatches' \
+    #           --header 'A: application/vnd.github.v3+json' \
+    #           --header 'Authorization: Bearer ${{ secrets.TOKEN_ARGO }}' \
+    #           --header 'Content-Type: application/json' \
+    #           --data-raw '{"event_type":"update-image" , "client_payload":{ 
+    #               "image":"node_app:${{ github.sha }}"
+    #             }}' 
