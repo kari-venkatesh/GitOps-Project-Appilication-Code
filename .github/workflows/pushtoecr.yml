@@ -89,8 +89,8 @@ jobs:
 
     - name: Commit and push updated deployment manifest
       run: |
-          git config --global user.email "${{ env.MAIL_ID }}"
-          git config --global user.name "${{ env.USER_NAME }}"
+          git config --global user.email "lifeindevops@gmail.com"
+          git config --global user.name "life-in-devops"
 
           git add kube/deployment.yaml
           git commit -m "Update deployment manifest with new image"
