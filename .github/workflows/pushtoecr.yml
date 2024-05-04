@@ -69,8 +69,9 @@ jobs:
     - name: Checkout Deployment Repo
       uses: actions/checkout@v2
       with:
-        repository: https://github.com/life-in-devops/GitOps-Project-EKS.git  # Replace with the URL of the deployment repo
-        path: kube                    # Checkout only the kube directory
+        repository: life-in-devops/GitOps-Project-EKS
+        ref: main  # Optionally, specify a branch or tag here if needed
+        path: kube
 
     - name: Update Deployment Manifest
       run: |
