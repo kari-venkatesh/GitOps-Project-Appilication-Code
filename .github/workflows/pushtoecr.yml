@@ -73,6 +73,14 @@ jobs:
         repository: life-in-devops/GitOps-Project-EKS
         ref: main  # Optionally, specify a branch or tag here if needed
         path: kube
+   
+    - name: List Files in kube Directory
+      run: |
+        ls kube  # List contents of the kube directory
+        if [ ! $? -eq 0 ]; then
+          echo "Error: Failed to list files in kube directory"
+          exit 1
+        fi 
 
     - name: Update Deployment Manifest
       run: |
