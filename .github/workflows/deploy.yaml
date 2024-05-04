@@ -73,7 +73,7 @@ jobs:
     - name: Update Deployment Manifest
       run: |
         # Replace the image reference in deployment.yaml
-        sed -i "s|image: |image: $ECR_REGISTRY/$ECR_REPOSITORY:|" kube/deployment.yaml
+        sed -i "s|image: (?:.*/)?([^:]*):|image: $ECR_REGISTRY/$ECR_REPOSITORY:/\1|" kube/deployment.yaml
 
     - name: Commit and push updated deployment manifest
       run: |
