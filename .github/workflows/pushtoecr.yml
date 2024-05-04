@@ -76,7 +76,7 @@ jobs:
    
     - name: List Files in kube Directory
       run: |
-        ls  # List contents of the root directory
+        ls -la  # List contents of the root directory
         if [ ! $? -eq 0 ]; then
           echo "Error: Failed to list files in kube directory"
           exit 1
