@@ -72,6 +72,7 @@ jobs:
       with:
         repository: life-in-devops/GitOps-Project-EKS
         ref: main  # Optionally, specify a branch or tag here if needed
+        token: ${{ secrets.KUBE_REPO_ACCESS_TOKEN }}
         # path: kube
    
     - name: List Files in kube Directory
