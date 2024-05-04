@@ -61,6 +61,17 @@ jobs:
         docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}"
         
+  update-deployment:
+    name: Update Deployment Manifest
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Deployment Repo
+      uses: actions/checkout@v2
+      with:
+        repository: GitOps-Project-EKS  # Replace with the URL of the deployment repo
+        path: kube                    # Checkout only the kube directory
+
     - name: Update Deployment Manifest
       run: |
         # Replace the image reference in deployment.yaml
@@ -73,14 +84,4 @@ jobs:
 
           git add kube/deployment.yaml
           git commit -m "Update deployment manifest with new image"
-          git push https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/${{ env.DEPLOYMENT_REPO_OWNER }}/${{ env.DEPLOYMENT_REPO_NAME }}.git HEAD:main      
-
-    # - name: Commit the image to the gitops repo
-    #   run: | 
-    #           curl --location --request POST 'https://api.github.com/repos/shivamangina/node-git-ops/dispatches' \
-    #           --header 'A: application/vnd.github.v3+json' \
-    #           --header 'Authorization: Bearer ${{ secrets.TOKEN_ARGO }}' \
-    #           --header 'Content-Type: application/json' \
-    #           --data-raw '{"event_type":"update-image" , "client_payload":{ 
-    #               "image":"node_app:${{ github.sha }}"
-    #             }}' 
+          git push https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/${{ env.DEPLOYMENT_REPO_OWNER }}/${{ env.DEPLOYMENT_REPO_NAME }}.git HEAD:main
