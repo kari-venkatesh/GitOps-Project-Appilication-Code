@@ -60,6 +60,20 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
         docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}"
+        
+    - name: Update Deployment Manifest
+      run: |
+        # Replace the image reference in deployment.yaml
+        sed -i "s|image: .*|image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}|g" kube/deployment.yaml
+
+    - name: Commit and push updated deployment manifest
+      run: |
+          git config --global user.email "lifeindevops@gmail.com"
+          git config --global user.name "life-in-devops"
+
+          git add kube/deployment.yaml
+          git commit -m "Update deployment manifest with new image"
+          git push https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/${{ env.DEPLOYMENT_REPO_OWNER }}/${{ env.DEPLOYMENT_REPO_NAME }}.git HEAD:main      
 
     # - name: Commit the image to the gitops repo
     #   run: | 
