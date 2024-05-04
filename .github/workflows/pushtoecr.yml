@@ -94,6 +94,6 @@ jobs:
 
           git add kube/deployment.yaml
           git commit -m "Update deployment manifest with new image"
-          git push https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/life-in-devops/GitOps-Project-EKS.git HEAD:main
+          git push https://$GITHUB_ACTOR:$_GITHUB_TOKEN@github.com/life-in-devops/GitOps-Project-EKS.git HEAD:main
           # git push https://${{ secrets.USER_NAME }}:${{ secrets.PASSWORD }}@github.com/life-in-devops/GitOps-Project-EKS.git/
           # git push https://${{ secrets.USER_TOKEN }}@github.com/life-in-devops/GitOps-Project-EKS.git/
