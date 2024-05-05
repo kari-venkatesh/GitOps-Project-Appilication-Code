@@ -46,8 +46,8 @@ jobs:
       run: |
         # Build a docker container and push it to ECR so that it can
         docker build -t samplenode-app .
-        docker tag samplenode-app:latest1 500230242536.dkr.ecr.ap-south-1.amazonaws.com/samplenode-app:latest1
-        docker push 500230242536.dkr.ecr.ap-south-1.amazonaws.com/samplenode-app:latest1
+        docker tag samplenode-app:latest 500230242536.dkr.ecr.ap-south-1.amazonaws.com/samplenode-app:latest
+        docker push 500230242536.dkr.ecr.ap-south-1.amazonaws.com/samplenode-app:latest
 
   # # Updating the image in kube manifest file in another github repository    
 
@@ -68,7 +68,7 @@ jobs:
     - name: Update Deployment Manifest
       run: |
         # Replace the image reference in deployment.yaml
-        sed -i "s|image: .*|image: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}|g" kube/deployment.yaml
+        sed -i "s|image: .*|image: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.event.client_payload.image }}|g" kube/deployment.yaml
 
     - name: Commit and push updated deployment manifest
       run: |        
