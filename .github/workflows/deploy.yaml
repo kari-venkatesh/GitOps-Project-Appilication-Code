@@ -12,6 +12,9 @@ on:
 
 env:
   AWS_REGION: ap-south-1
+  ECR_REGISTRY: 500230242536.dkr.ecr.ap-south-1.amazonaws.com
+  ECR_REPOSITORY: sample-node-app
+
 
 jobs:
   deploy:
@@ -47,7 +50,7 @@ jobs:
         docker push 500230242536.dkr.ecr.ap-south-1.amazonaws.com/sample-node-app:latest
 
   # Updating the image in kube manifest file in another github repository    
-    
+
   update-deployment:
     name: Update Deployment Manifest
     runs-on: ubuntu-latest
@@ -73,7 +76,7 @@ jobs:
     - name: Update Deployment Manifest
       run: |
         # Replace the image reference in deployment.yaml
-        sed -i "s|image: .*|image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}|g" kube/deployment.yaml
+        sed -i "s|image: .*|image: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}|g" kube/deployment.yaml
 
     - name: Commit and push updated deployment manifest
       run: |
