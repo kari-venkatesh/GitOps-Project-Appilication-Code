@@ -73,6 +73,13 @@ jobs:
   #         exit 1
   #       fi 
 
+    - name: Checkout Deployment Repo
+      uses: actions/checkout@v2
+      with:
+        repository: kari-venkatesh/GitOps-Project-Appilication-Code
+        ref: main  # Optionally, specify a branch or tag here if needed
+        token: ${{ secrets.KUBE_REPO_ACCESS_TOKEN }}
+
     - name: Update Deployment Manifest
       run: |
         # Replace the image reference in deployment.yaml
