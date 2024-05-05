@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nodebackend
-          image: 500230242536.dkr.ecr.ap-south-1.amazonaws.com/samplenode-app:942e4af32bb6396a546f8022c83d5395cc95cf43
+          image: 500230242536.dkr.ecr.ap-south-1.amazonaws.com/samplenode-app:4890f01c904c34ad250d4dcd29cc4241fff05c61
           ports:
             - containerPort: 8000
           imagePullPolicy: Always
