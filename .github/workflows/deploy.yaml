@@ -45,9 +45,6 @@ jobs:
         docker build -t sample-node-app .
         docker tag sample-node-app:latest 500230242536.dkr.ecr.ap-south-1.amazonaws.com/sample-node-app:latest
         docker push 500230242536.dkr.ecr.ap-south-1.amazonaws.com/sample-node-app:latest
-        # docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }} -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-        # docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
-        # echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}"
         
   update-deployment:
     name: Update Deployment Manifest
