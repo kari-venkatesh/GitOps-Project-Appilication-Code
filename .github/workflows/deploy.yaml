@@ -45,7 +45,9 @@ jobs:
         docker build -t sample-node-app .
         docker tag sample-node-app:latest 500230242536.dkr.ecr.ap-south-1.amazonaws.com/sample-node-app:latest
         docker push 500230242536.dkr.ecr.ap-south-1.amazonaws.com/sample-node-app:latest
-        
+
+  # Updating the image in kube manifest file in another github repository    
+    
   update-deployment:
     name: Update Deployment Manifest
     runs-on: ubuntu-latest
