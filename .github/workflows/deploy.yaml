@@ -49,18 +49,19 @@ jobs:
         docker tag samplenode-app:latest 500230242536.dkr.ecr.ap-south-1.amazonaws.com/samplenode-app:latest
         docker push 500230242536.dkr.ecr.ap-south-1.amazonaws.com/samplenode-app:latest
 
-  # Updating the image in kube manifest file in another github repository    
+  # # Updating the image in kube manifest file in another github repository    
 
-  update-deployment:
-    name: Update Deployment Manifest
-    runs-on: ubuntu-latest
-    needs: deploy
+  # update-deployment:
+  #   name: Update Deployment Manifest
+  #   runs-on: ubuntu-latest
+  #   needs: deploy
 
-    steps:
+  #   steps:
+
     - name: Checkout Deployment Repo
       uses: actions/checkout@v2
       with:
-        repository: kari-venkatesh/GitOps-Project-EKS
+        repository: kari-venkatesh/GitOps-Project-Appilication-Code
         ref: main  # Optionally, specify a branch or tag here if needed
         token: ${{ secrets.KUBE_REPO_ACCESS_TOKEN }}
   
